@@ -1,4 +1,11 @@
-// This file will export middleware as the application grows
+'use strict';
+
+const auth = require('./auth');
+const roles = require('./roles');
+const security = require('./security');
+
 module.exports = {
-  // Add your middleware here
+  auth,
+  roles,
+  security,
 };
