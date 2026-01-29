@@ -45,6 +45,14 @@ function getConfig() {
   const jwtIssuer = process.env.REACT_APP_JWT_ISSUER || 'backend_express';
   const jwtAudience = process.env.REACT_APP_JWT_AUDIENCE || 'multivendor-marketplace';
 
+  // Database configuration (PostgreSQL container). These env vars are provided by the platform.
+  // Do not hardcode credentials here.
+  const postgresUrl = process.env.POSTGRES_URL || null;
+  const postgresUser = process.env.POSTGRES_USER || null;
+  const postgresPassword = process.env.POSTGRES_PASSWORD || null;
+  const postgresDb = process.env.POSTGRES_DB || null;
+  const postgresPort = process.env.POSTGRES_PORT || null;
+
   return {
     nodeEnv,
     port,
@@ -57,6 +65,13 @@ function getConfig() {
       jwtIssuer,
       jwtAudience,
       jwtExpiresIn: process.env.REACT_APP_JWT_EXPIRES_IN || '1h',
+    },
+    db: {
+      postgresUrl,
+      postgresUser,
+      postgresPassword,
+      postgresDb,
+      postgresPort,
     },
   };
 }
