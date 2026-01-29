@@ -16,19 +16,24 @@ let server;
  * If DB connection fails, we fail fast to avoid serving a broken API.
  */
 async function start() {
+  // Always start the HTTP server so health checks can pass and the container
+  // can become "ready" even if the database is temporarily unavailable/misconfigured.
+  server = app.listen(PORT, HOST, () => {
+    // eslint-disable-next-line no-console
+    console.log(`Server running at http://${HOST}:${PORT}`);
+  });
+
   try {
     await initDataSource();
     // eslint-disable-next-line no-console
     console.log('Database connected (TypeORM).');
-
-    server = app.listen(PORT, HOST, () => {
-      // eslint-disable-next-line no-console
-      console.log(`Server running at http://${HOST}:${PORT}`);
-    });
   } catch (err) {
     // eslint-disable-next-line no-console
-    console.error('Failed to initialize database connection:', err);
-    process.exit(1);
+    console.error(
+      'Database initialization failed; continuing without DB connection. ' +
+        'DB-dependent endpoints may fail until connectivity is restored.',
+      err
+    );
   }
 }
 
