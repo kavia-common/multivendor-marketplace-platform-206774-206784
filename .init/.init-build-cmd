@@ -1,0 +1,4 @@
+{
+    "command": "npm install",
+    "working_directory": "/home/kavia/workspace/code-generation/multivendor-marketplace-platform-206774-206784/backend_express"
+}
